@@ -67,7 +67,7 @@ sudo fc-cache -fv
 mv ~/.config/nvim ~/.config/nvim.backup 2>/dev/null || true
 
 # Clone this repository
-git clone <your-repo-url> ~/.config/nvim
+git clone https://github.com/saganawski/simple-neovim-config.git ~/.config/nvim
 
 # Start Neovim (plugins will auto-install)
 nvim
