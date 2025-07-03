@@ -285,6 +285,21 @@ Modify `lua/plugins/colorscheme.lua` to use a different theme.
 :Lazy sync
 ```
 
+### Icons Not Displaying
+
+If you see missing icons or squares instead of symbols:
+
+1. **Verify Nerd Font is installed**:
+   ```bash
+   fc-list | grep -i jetbrains
+   ```
+
+2. **Configure terminal to use Nerd Font**:
+   - Change terminal font from "JetBrains Mono" to "JetBrainsMono Nerd Font"
+   - Available font names: "JetBrainsMono Nerd Font", "JetBrainsMono NF", or "JetBrainsMono Nerd Font Mono"
+
+3. **Restart terminal** after font change
+
 ### Check Health
 
 ```bash
