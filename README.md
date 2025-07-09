@@ -1,6 +1,6 @@
 # Neovim Configuration for Python & JavaScript Development
 
-A comprehensive Neovim configuration optimized for Python and JavaScript development on Ubuntu. This setup provides a modern IDE-like experience with LSP support, intelligent autocompletion, file navigation, and productivity features.
+A comprehensive Neovim configuration optimized for Python and JavaScript development on Ubuntu. This setup provides a modern IDE-like experience with LSP support, intelligent autocompletion, file navigation, productivity features, and seamless tmux integration.
 
 ## 🎯 What This Config Supports
 
@@ -19,7 +19,8 @@ A comprehensive Neovim configuration optimized for Python and JavaScript develop
 - **Git Integration** - Git signs and blame functionality
 - **Modern UI** - Beautiful status line, buffer tabs, and syntax highlighting
 - **Productivity** - Auto-pairs, treesitter, and smart key bindings
-- **Tmux Integration** - Seamless terminal multiplexing and session management
+- **Tmux Integration** - Seamless navigation between Neovim and tmux panes
+- **Interactive Keybind Trainer** - Learn all keybindings through games and exercises
 
 ## 📋 Requirements
 
@@ -74,24 +75,116 @@ git clone https://github.com/saganawski/simple-neovim-config.git ~/.config/nvim
 nvim
 ```
 
-### 4. Install Tmux Configuration (Optional)
-
-For enhanced terminal multiplexing and session management:
-
-```bash
-# Clone tmux configuration
-git clone https://github.com/saganawski/tmux.git ~/.config/tmux
-
-# The tmux configuration will automatically be detected by tmux
-```
-
-### 5. Configure Terminal Font
+### 4. Configure Terminal Font
 
 Set your terminal to use "JetBrainsMono Nerd Font" for proper icon display:
 
 - **GNOME Terminal**: Preferences → Profiles → Text → Font
 - **Alacritty**: Edit `~/.config/alacritty/alacritty.yml`
 - **Kitty**: Edit `~/.config/kitty/kitty.conf`
+
+## 🖥️ Tmux Integration
+
+This Neovim configuration works seamlessly with tmux for the ultimate terminal multiplexer experience.
+
+### Installing Tmux Configuration
+
+```bash
+# Install tmux
+sudo apt update
+sudo apt install -y tmux
+
+# Clone the tmux configuration
+git clone https://github.com/saganawski/tmux.git ~/.config/tmux-temp
+
+# Backup existing config (if any)
+mv ~/.config/tmux ~/.config/tmux.backup 2>/dev/null || true
+
+# Move the configuration files
+mv ~/.config/tmux-temp/.config/tmux ~/.config/
+rm -rf ~/.config/tmux-temp
+
+# Install Tmux Plugin Manager (TPM)
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+# Start tmux
+tmux new -s dev
+
+# Install plugins (inside tmux)
+# Press Ctrl+a then I (capital i) to install all plugins
+```
+
+### Tmux Key Bindings
+
+**Prefix**: `Ctrl+a` (changed from default `Ctrl+b` for easier access)
+
+| Key | Action |
+|-----|--------|
+| `Ctrl+a c` | Create new window |
+| `Ctrl+a \|` | Split pane vertically |
+| `Ctrl+a -` | Split pane horizontally |
+| `Ctrl+a x` | Close current pane |
+| `Ctrl+a z` | Toggle pane zoom |
+| `Ctrl+a d` | Detach from session |
+| `Ctrl+a [` | Enter copy mode |
+
+### Seamless Navigation
+
+The best feature! Use these keys to navigate between Neovim splits AND tmux panes:
+
+| Key | Action |
+|-----|--------|
+| `Ctrl+h` | Navigate left (works in both Neovim and tmux!) |
+| `Ctrl+j` | Navigate down |
+| `Ctrl+k` | Navigate up |
+| `Ctrl+l` | Navigate right |
+
+## 🎮 Keybind Trainer Game
+
+Master your keybindings with the built-in interactive trainer! Inspired by vim-be-good, this game helps you build muscle memory for all the custom keybindings in this configuration.
+
+### Starting the Trainer
+
+```vim
+:KeybindTrainer    " Open the main menu
+:KeybindGame       " Jump straight to the challenge game
+:KeybindCheatsheet " View all keybindings
+```
+
+Or use keybindings:
+- `<Space>kt` - Start Keybind Trainer
+- `<Space>kg` - Start Keybind Game
+- `<Space>kc` - Show Keybind Cheatsheet
+
+### Game Modes
+
+1. **📚 Training Mode** - Learn keybindings step-by-step with guided exercises
+2. **🎮 Challenge Game** - Test your speed and accuracy under time pressure
+3. **📖 Cheatsheet** - Quick reference for all keybindings
+4. **📊 Statistics** - Track your learning progress
+
+### How to Play
+
+**Training Mode:**
+- Follow the on-screen prompts
+- Press the displayed keybinding
+- Get instant feedback
+- Progress through categories
+
+**Game Mode:**
+- Keybindings appear on screen
+- Execute them before time runs out
+- Earn points for speed
+- Level up for harder challenges
+- Don't lose all your lives!
+
+### Tips for Success
+
+1. Start with Training Mode to learn systematically
+2. Practice for 5-10 minutes daily
+3. Focus on one category at a time
+4. Use the keybindings in real coding immediately after learning
+5. Challenge yourself with the game mode once comfortable
 
 ## 📁 Configuration Structure
 
@@ -106,16 +199,22 @@ The configuration follows a modular approach where each plugin has its own file 
 │   │   ├── keymaps.lua     # Key bindings
 │   │   ├── lazy.lua        # Plugin manager setup
 │   │   └── lsp.lua         # LSP post-setup
-│   └── plugins/            # Individual plugin configs
-│       ├── colorscheme.lua # Theme configuration
-│       ├── telescope.lua   # Fuzzy finder
-│       ├── nvim-tree.lua   # File explorer
-│       ├── lsp.lua         # Language servers
-│       ├── nvim-cmp.lua    # Autocompletion
-│       ├── formatting.lua  # Code formatting
-│       ├── linting.lua     # Code linting
-│       ├── treesitter.lua  # Syntax highlighting
-│       └── ui.lua          # UI enhancements
+│   ├── plugins/            # Individual plugin configs
+│   │   ├── colorscheme.lua # Theme configuration
+│   │   ├── telescope.lua   # Fuzzy finder
+│   │   ├── nvim-tree.lua   # File explorer
+│   │   ├── lsp.lua         # Language servers
+│   │   ├── nvim-cmp.lua    # Autocompletion
+│   │   ├── formatting.lua  # Code formatting
+│   │   ├── linting.lua     # Code linting
+│   │   ├── treesitter.lua  # Syntax highlighting
+│   │   ├── ui.lua          # UI enhancements
+│   │   ├── tmux.lua        # Tmux integration
+│   │   └── keybind-trainer.lua # Interactive trainer
+│   └── keybind-trainer/    # Trainer modules
+│       ├── init.lua        # Main trainer logic
+│       ├── menu.lua        # Menu system
+│       └── game.lua        # Game mode
 ```
 
 ## 🔧 Adding New Plugins
@@ -253,12 +352,23 @@ If you only remember 10 key bindings, make it these:
 
 ## 🧭 Typical Workflow
 
+### Terminal Multiplexer Setup
+
+1. **Start tmux session**: `tmux new -s dev`
+2. **Split for editor + terminal**: `Ctrl+a |`
+3. **Open Neovim in left pane**: `nvim`
+4. **Use right pane for commands**: git, running servers, etc.
+5. **Navigate seamlessly**: `Ctrl+h/j/k/l` works everywhere!
+
+### In Neovim
+
 1. **Open project**: `nvim .` in your project directory
 2. **Browse files**: `<Space>ee` to see file tree
 3. **Find specific file**: `<Space>ff` and type filename
 4. **Navigate code**: `gd` to jump to definitions, `K` for docs
 5. **Fix issues**: `]d` to go to errors, `<Space>ca` for quick fixes
 6. **Switch files**: `Shift+h/l` between open files
+7. **Practice keybindings**: `<Space>kt` to open the trainer!
 
 ## 🔧 Customization
 
@@ -277,6 +387,31 @@ Edit `lua/config/keymaps.lua` to change or add key bindings.
 Modify `lua/plugins/colorscheme.lua` to use a different theme.
 
 ## 🐛 Troubleshooting
+
+### Tmux Issues
+
+#### Navigation Not Working Between Neovim and Tmux
+1. Ensure both plugins are installed (vim-tmux-navigator in Neovim, tmux-navigator in tmux)
+2. Reload tmux config: `Ctrl+a r`
+3. Restart Neovim
+
+#### Tmux Colors Look Wrong
+Add to your shell config (`.bashrc` or `.zshrc`):
+```bash
+export TERM=screen-256color
+```
+
+### Keybind Trainer Issues
+
+#### Trainer Commands Not Found
+1. Make sure all files are in correct locations
+2. Run `:Lazy sync` to ensure plugin is loaded
+3. Check `:Lazy` to see if keybind-trainer is listed
+
+#### Menu Keys Not Working
+1. Ensure you're in normal mode (press `Esc`)
+2. Buffer must be focused (click in it or press `i` then `Esc`)
+3. Try the minimal test version in the troubleshooting section
 
 ### LSP Not Working
 
@@ -324,6 +459,12 @@ If you see missing icons or squares instead of symbols:
 
 Feel free to submit issues and pull requests to improve this configuration!
 
+### Repositories
+
+- **Neovim Config**: [https://github.com/saganawski/simple-neovim-config](https://github.com/saganawski/simple-neovim-config)
+- **Tmux Config**: [https://github.com/saganawski/tmux](https://github.com/saganawski/tmux)
+
 ## 📄 License
 
 This configuration is open source and available under the MIT License.
+
