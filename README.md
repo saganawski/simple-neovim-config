@@ -19,6 +19,7 @@ A comprehensive Neovim configuration optimized for Python and JavaScript develop
 - **Git Integration** - Git signs and blame functionality
 - **Modern UI** - Beautiful status line, buffer tabs, and syntax highlighting
 - **Productivity** - Auto-pairs, treesitter, and smart key bindings
+- **Tmux Integration** - Seamless terminal multiplexing and session management
 
 ## 📋 Requirements
 
@@ -73,7 +74,18 @@ git clone https://github.com/saganawski/simple-neovim-config.git ~/.config/nvim
 nvim
 ```
 
-### 4. Configure Terminal Font
+### 4. Install Tmux Configuration (Optional)
+
+For enhanced terminal multiplexing and session management:
+
+```bash
+# Clone tmux configuration
+git clone https://github.com/saganawski/tmux.git ~/.config/tmux
+
+# The tmux configuration will automatically be detected by tmux
+```
+
+### 5. Configure Terminal Font
 
 Set your terminal to use "JetBrainsMono Nerd Font" for proper icon display:
 
