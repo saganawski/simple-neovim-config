@@ -14,8 +14,8 @@ require("config.lazy")
 
 -- Load plugin configurations after lazy.nvim is set up
 vim.api.nvim_create_autocmd("User", {
-  pattern = "VeryLazy",
-  callback = function()
-    require("config.lsp")
-  end,
+    pattern = "VeryLazy",
+    callback = function()
+        require("config.lsp")
+    end,
 })
